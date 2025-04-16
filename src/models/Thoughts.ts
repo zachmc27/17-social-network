@@ -1,8 +1,9 @@
-import { Schema, model, Document, ObjectId } from 'mongoose';
+import moment from 'moment';
+import mongoose, { Schema, model, Document, ObjectId } from 'mongoose';
 
 interface IThought extends Document {
   thoughtText: string;
-  createdAt: Date;
+  createdAt?: Date;
   username: string;
   reactions?: ObjectId[]
 }
@@ -11,14 +12,14 @@ interface IReaction extends Document {
   reactionId: ObjectId;
   reactionBody: string;
   username: string;
-  createdAt: Date
+  createdAt?: Date
 }
 
 const reactionSchema = new Schema<IReaction>(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
-      default: () => new (require('mongoose').Types.ObjectId)(), 
+      default: () => new mongoose.Types.ObjectId(), 
     },
     reactionBody: {
       type: String,
@@ -32,8 +33,8 @@ const reactionSchema = new Schema<IReaction>(
     },
     createdAt: {
       type: Date,
-      default: Date.now
-      //FORMAT LATER
+      default: Date.now,
+      get: (timestamp: Date) => moment(timestamp).format('MMMM Do YYYY, h:mm:ss a'),
     }
   }
 )
@@ -48,14 +49,21 @@ const thoughtSchema = new Schema<IThought>(
     },
     createdAt: {
       type: Date,
-      default: Date.now
-      //FORMAT LATER
+      default: Date.now,
+      get: (timestamp: Date) => moment(timestamp).format('MMMM Do YYYY, h:mm:ss a'),
     },
     username: {
       type: String,
       required: true
     },
     reactions: [reactionSchema]
+  },
+  {
+    toJSON: {
+      virtuals: true,
+      getters: true
+    },
+    id: false
   }
 );
 
@@ -66,6 +74,6 @@ thoughtSchema
   })
 
 // Initialize our Post model
-const Thought = model('thought', thoughtSchema);
+const Thought = model('thoughts', thoughtSchema);
 
 export default Thought;
