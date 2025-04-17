@@ -51,6 +51,8 @@
   To use the application, do the following:
 
   Once the application is started, use any of the api routes included in the routes folder to create, read, update, and delete data from the database. The application is setup to handle CRUD operations for users, friendlists, reactions, and thoughts. To test these routes, start the application to start the server by entering ` npm start ` in the terminal, and then run the links through an application like insomnia.
+
+  Refer to this [walkthrough video](https://drive.google.com/file/d/17kOXgrUmHw7F6qaEYfn1olyLgcEpYZOc/view?usp=sharing) for more details
     
   ## Contributing
    

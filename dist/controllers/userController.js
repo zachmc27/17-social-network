@@ -53,7 +53,6 @@ export const updateUser = async (req, res) => {
 };
 export const deleteUser = async (req, res) => {
     try {
-        await User.findByIdAndUpdate(req.params.userId, { $set: { thoughts: [] } }, { new: true });
         const dbUserData = await User.findByIdAndDelete(req.params.userId);
         if (!dbUserData) {
             console.log(`Issue finding user with ID ${req.params.userId}`);

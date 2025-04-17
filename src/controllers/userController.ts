@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import { Request, Response } from 'express';
-import Thought from '../models/Thoughts.js';
+
 
   export const getUsers = async (_req: Request, res: Response) => {
     try {
